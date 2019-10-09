@@ -1,0 +1,19 @@
+{
+  "name": "komo-blog-back",
+  "version": "1.0.0",
+  "description": "摸鱼一时爽，一直摸鱼一直爽",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node app.js"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "koa": "^2.5.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.6",
+    "mongoose": "^5.2.7",
+    "uuid": "^3.3.2"
+  }
+}
