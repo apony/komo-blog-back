@@ -5,6 +5,16 @@ Blog Backend Project【Koa Server and Mongodb Database】
 ## 介绍
 + 此项目为博客提供接口服务的后台管理系统
 
+## 安装依赖
+```shell
+npm install
+```
+
+## 运行服务
+```shell
+npm run server
+```
+
 ## 运行
 
 ## 线上预览
