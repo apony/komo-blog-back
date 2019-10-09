@@ -15,9 +15,5 @@ npm install
 npm run server
 ```
 
-## 运行
-
-## 线上预览
-
 ## tips
 + mongoDB可视化工具，Robo3T客户端比较好用
