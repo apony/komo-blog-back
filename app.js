@@ -26,8 +26,10 @@ app.use(bodyParser());
 
 /*自由发挥区-start*/
 const test_router = require('./routes/api/test_router');
+const user_router = require('./routes/api/user_router');
 
 app.use(test_router.routes()).use(test_router.allowedMethods());
+app.use(user_router.routes()).use(user_router.allowedMethods());
 /*end*/
 
 app.listen(config.port);
