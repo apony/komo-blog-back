@@ -1,4 +1,3 @@
-// 先摸过来
 const Koa = require('koa')
 const config = require('./config')
 
@@ -32,8 +31,10 @@ app.use(bodyParser())
 
 /*自由发挥区-start*/
 const user_router = require('./routes/api/user_router')
+const blog_router = require('./routes/api/blog_router')
 
 app.use(user_router.routes()).use(user_router.allowedMethods())
+app.use(blog_router.routes()).use(blog_router.allowedMethods())
 /*end*/
 
 app.listen(config.port)

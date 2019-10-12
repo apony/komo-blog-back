@@ -1,19 +1,6 @@
 const User_col = require('./../models/user');
 const common = require('./../utils/common');
 
-// 测试接口
-const get = async (ctx, next) => {
-    ctx.status = 200;
-    console.log('getting users...')
-    const users = await User_col.find({});
-    ctx.body = {
-        msg: 'get users success',
-        data: {
-            item: users
-        }
-    }
-}
-
 // 注册
 const register = async (ctx, next) => {
     const req = ctx.request.body;
@@ -130,7 +117,6 @@ const update = async (ctx, next) => {
 };
 
 module.exports = {
-    get,
     register,
     login,
     update

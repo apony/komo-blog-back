@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
-    // _id由数据库自动生成
+    // _id由数据库自动生成，所有表都有这一项
     // _id: {
-    //     type: Number,
+    //     type: String,
     //     unique: true,
     //     require: true
     // },
@@ -43,10 +43,12 @@ const UserSchema = new Schema({
         type: String
     },
     level: {
-        type: Number
+        type: Number,
+        default: 0
     },
     coin: {
-        type: Number
+        type: Number,
+        default: 0
     }
 }, { collection: 'user', versionKey: false});
 
