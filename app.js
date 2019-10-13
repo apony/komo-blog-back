@@ -22,6 +22,7 @@ mongoose.connect(
       console.error('Failed to connect to database')
     } else {
       console.log('Connecting database successfully')
+      console.log('Your server is begining! http://localhost:8000')
     }
   }
 )
