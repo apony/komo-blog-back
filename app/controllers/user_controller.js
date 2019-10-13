@@ -56,7 +56,7 @@ const login = async (ctx, next) => {
     if (user) {
         if(user.password === req.password){
             ctx.body = {
-                code: 0,
+                code: 1,
                 msg: '登陆成功',
                 data: {
                     userId: user._id,
