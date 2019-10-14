@@ -1,9 +1,9 @@
 # komo-blog-back
 Blog Backend Project【Koa Server and Mongodb Database】
->后台管理系统：koa+mongodb
+>技术栈：koa+mongodb
 
 ## 介绍
-+ 此项目为博客提供接口服务的后台管理系统
++ 此项目为reant-blog-front提供接口服务
 
 ## 安装依赖
 ```shell
@@ -16,4 +16,7 @@ npm run server
 ```
 
 ## tips
-+ mongoDB可视化工具，Robo3T客户端比较好用
++ 运行端口：http://loaclhost:8000
++ 安装mongodb，q群有安装教程(723594858)
++ mongoDB可视化工具：Robo3T
++ 修改mongodb端口8000，默认为27017（安装目录找到mongod.cfg修改port字段即可，然后重启mongodb服务）
