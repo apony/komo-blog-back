@@ -8,6 +8,7 @@ const get = async (ctx, next) => {
     console.log('getting blog...')
     const blog = await Blog_col.find({});
     ctx.body = {
+        success: true,
         msg: 'get blog success',
         data: {
             item: blog
@@ -41,7 +42,7 @@ const add = async (ctx, next) => {
 
     if(newBlog) {
         ctx.body = {
-            code: 1,
+            success: true,
             msg: '发表成功',
             data: {
                 blogId: newBlog._id,
@@ -50,7 +51,7 @@ const add = async (ctx, next) => {
         }
     }else {
         ctx.body = {
-            code: 0,
+            success: false,
             msg: '发表失败'
         }
     }

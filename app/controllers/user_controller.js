@@ -13,7 +13,7 @@ const register = async (ctx, next) => {
     ctx.status = 200;
     if (user) {
         ctx.body = {
-            code: 0,
+            success: false,
             msg: '用户名重复'
         };
         return;
@@ -28,7 +28,7 @@ const register = async (ctx, next) => {
 
     if (newUser) {
         ctx.body = {
-            code: 1,
+            success: true,
             msg: '注册成功',
             data: {
                 userId: newUser._id,
@@ -38,7 +38,7 @@ const register = async (ctx, next) => {
         }
     } else {
         ctx.body = {
-            code: 0,
+            success: false,
             msg: '注册失败'
         };
     }
@@ -56,7 +56,7 @@ const login = async (ctx, next) => {
     if (user) {
         if(user.password === req.password){
             ctx.body = {
-                code: 1,
+                success: true,
                 msg: '登陆成功',
                 data: {
                     userId: user._id,
@@ -74,13 +74,13 @@ const login = async (ctx, next) => {
             }
         }else {
             ctx.body = {
-                code: 0,
+                success: false,
                 msg: '密码错误'
             }
         }
     } else {
         ctx.body = {
-            code: 0,
+            success: false,
             msg: '用户不存在'
         }
     }
@@ -105,12 +105,12 @@ const update = async (ctx, next) => {
     ctx.status = 200;
     if (result.nModified === 1) {
         ctx.body = {
-            code: 1,
+            success: true,
             msg: '修改成功'
         }
     } else {
         ctx.body = {
-            code: 0,
+            success: false,
             msg: '修改失败'
         }
     }
