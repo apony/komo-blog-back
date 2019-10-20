@@ -1,5 +1,8 @@
 const Koa = require('koa')
 const config = require('./config')
+const koajwt = require('koa-jwt')
+const secret = require('./config').serectKey
+const errorHandle = require('./app/middlewares/errorHandle')
 
 // https://www.npmjs.com/package/koa2-cors
 const cors = require('koa2-cors')
@@ -12,6 +15,7 @@ const mongoose = require('mongoose')
 
 const app = new Koa()
 
+// 连接数据库
 mongoose.set('useCreateIndex', true)
 mongoose.connect(
   config.db,
@@ -27,6 +31,17 @@ mongoose.connect(
   }
 )
 
+// 错误处理
+app.use(errorHandle())
+
+// token鉴权(unless指定哪些URL不需要进行token验证)
+app.use(
+  koajwt({
+    secret
+  }).unless({
+    path: [/\/user\/login/, /\/user\/register/]
+  })
+)
 app.use(cors())
 app.use(bodyParser())
 

@@ -1,5 +1,6 @@
 const User_col = require('./../models/user')
 const common = require('./../utils/common')
+const addtoken = require('../../token/addtoken')
 
 // 注册
 const register = async (ctx, next) => {
@@ -54,10 +55,12 @@ const login = async (ctx, next) => {
   ctx.status = 200
   if (user) {
     if (user.password === req.password) {
+      let token = addtoken({ user: req.account })
       ctx.body = {
         success: true,
         msg: '登陆成功',
         data: {
+          token,
           userId: user._id,
           account: user.account,
           nickname: user.nickname,
