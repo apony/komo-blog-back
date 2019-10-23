@@ -17,7 +17,7 @@ const get = async (ctx, next) => {
 }
 
 // 新增博客
-const add = async (ctx, next) => {
+const create = async (ctx, next) => {
     const req = ctx.request.body;
 
     // 暂时先用自带的id
@@ -57,7 +57,74 @@ const add = async (ctx, next) => {
     }
 }
 
+// 获取blog列表
+const list = async (ctx, next) => {
+    const req = ctx.query;
+    ctx.status = 200;
+
+    let pageSize = parseInt(req.pageSize || 10)
+    let pageNum = parseInt(req.pageNum || 1)
+
+    // 按条件搜索 比如标题 （好像find里只能在本集合中找对应字段，待小马哥研究）
+    let searchObj = {}
+    let searchFiled = ['userId']
+    searchFiled.forEach(field => {
+        if (!!req[field]) {
+            searchObj[field] = req[field]
+        }
+    })
+
+    // 按条件排序 默认按时间降序
+    let createTimeOrderObj = {
+        createTime: -1, // 1 = 升序，-1 = 降序
+    }
+
+    // 想要多条件排序就要多调用几次sort，这里放除了创建时间外的条件
+    // 可选范围 ['createTime','likeCount','collectCount','coinCount','commentCount','viewCount']
+    let orderObj = {}
+
+    if(req.sort){
+        // req.sort 由两部分组成 排序类型 + 升序/倒序('asc'/'desc')
+        let sortArray = req.sort.split(' ')
+        let sortField = sortArray[0]
+        let order = sortArray[1] === 'desc' ? -1 : 1
+        if(sortField === 'createTime'){
+            createTimeOrderObj.createTime = order
+        }else {
+            orderObj[sortField] = order
+        }
+
+    }
+
+    let totalItemCount = await Blog_col.countDocuments(searchObj)
+
+    let blogList = [];
+    if(totalItemCount > 0){
+        // 执行顺序是sort > skip > limit
+        // mongoose返回自己封装的一个对象，无法直接对其进行修改，需要加上.lean()
+        blogList = await Blog_col.find(searchObj).skip((pageNum-1)*pageSize).limit(pageSize).sort(orderObj).sort(createTimeOrderObj).lean()
+        if(blogList.length > 0){
+            for(let item of blogList){
+                item.createTime = common.dateFormat(new Date(item.createTime))
+            }
+        }
+    }
+
+    ctx.body = {
+        success: true,
+        msg: '获取博客列表成功',
+        data: {
+            items: blogList,
+            pageSize,
+            pageNum,
+            totalItemCount,
+            pageCount: Math.ceil(totalItemCount/pageSize),
+        }
+    }
+}
+
 module.exports = {
     get,
-    add
+    create,
+    list
 }
