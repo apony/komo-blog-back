@@ -8,6 +8,11 @@ const UserSchema = new Schema({
     //     unique: true,
     //     require: true
     // },
+    id: {
+        type: Number,
+        unique: true,
+        require: true
+    },
     account: {
         type: String,
         unique: true,

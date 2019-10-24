@@ -22,6 +22,7 @@ const register = async (ctx, next) => {
 
   // 插入新用户 暂时不加密密码
   const newUser = await User_col.create({
+    id: await common.getNextSequence('user'),
     account: req.account,
     password: req.password,
     registerTime: common.dateFormat(new Date())
@@ -32,7 +33,7 @@ const register = async (ctx, next) => {
       success: true,
       msg: '注册成功',
       data: {
-        userId: newUser._id,
+        id: newUser.id,
         account: newUser.account,
         registerTime: common.dateFormat(new Date(newUser.registerTime))
       }
@@ -61,7 +62,7 @@ const login = async (ctx, next) => {
         msg: '登陆成功',
         data: {
           token,
-          userId: user._id,
+          id: user.id,
           account: user.account,
           nickname: user.nickname,
           gender: user.gender,
@@ -109,7 +110,7 @@ const update = async (ctx, next) => {
 
   const result = await User_col.updateOne(
     {
-      _id: req.userId
+      id: req.id
     },
     data
   )

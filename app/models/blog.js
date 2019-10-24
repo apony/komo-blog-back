@@ -2,8 +2,13 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const BlogSchema = new Schema({
+    id: {
+        type: Number,
+        unique: true,
+        require: true,
+    },
     userId: {
-        type: String || Number,
+        type: Number,
         require: true
     },
     title: {

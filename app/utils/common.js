@@ -1,3 +1,21 @@
+const Counters = require('./../models/counters')
+
+/**
+ * 获取集合的下一个id
+ * @param collectionName
+ * @returns {Promise<number|sequence|{default, type}>}
+ */
+async function getNextSequence(collectionName) {
+    // 过程略麻烦，待小马哥研究
+    let collection = await Counters.findOne({collectionName});
+    if(!collection){
+        await Counters.create({collectionName});
+    }
+    await Counters.where({collectionName}).updateOne({$inc: {sequence: 1}})
+    const sequenceDocument = await Counters.findOne({collectionName})
+    return sequenceDocument.sequence;
+}
+
 function dateFormat (date,fmt) {
     if(!fmt){
         fmt = 'yyyy-MM-dd HH:mm:ss' // 默认格式
@@ -20,5 +38,6 @@ function dateFormat (date,fmt) {
 }
 
 module.exports = {
-    dateFormat
+    dateFormat,
+    getNextSequence
 };

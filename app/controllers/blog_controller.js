@@ -1,51 +1,25 @@
 const Blog_col = require('./../models/blog');
-const Counter_col = require('./../models/colletCounter')
 const common = require('./../utils/common');
-
-// 测试接口
-const get = async (ctx, next) => {
-    ctx.status = 200;
-    console.log('getting blog...')
-    const blog = await Blog_col.find({});
-    ctx.body = {
-        success: true,
-        msg: 'get blog success',
-        data: {
-            item: blog
-        }
-    }
-}
 
 // 新增博客
 const create = async (ctx, next) => {
     const req = ctx.request.body;
 
-    // 暂时先用自带的id
-    // let blogCollection = await Counter_col.find({
-    //     collectionName: 'blog'
-    // });
-    //
-    // if(!blogCollection){
-    //     blogCollection = await Counter_col.create({
-    //         collectionName: 'blog'
-    //     });
-    // }
-
-    ctx.status = 200;
     const newBlog = await Blog_col.create({
-        // _id: blogCollection.idCount++,
+        id: await common.getNextSequence('blog'),
         userId: req.userId,
         title: req.title,
         content: req.content,
         createTime: common.dateFormat(new Date())
     });
 
+    ctx.status = 200;
     if(newBlog) {
         ctx.body = {
             success: true,
             msg: '发表成功',
             data: {
-                blogId: newBlog._id,
+                id: newBlog.id,
                 userId: newBlog.userId
             }
         }
@@ -128,7 +102,7 @@ const getOne = async (ctx, next) => {
     const req = ctx.params
 
     // 这里找不到就直接返回404了
-    const blog = await Blog_col.findOne({_id: req.id}).lean()
+    const blog = await Blog_col.findOne({id: req.id}).lean()
 
     ctx.status = 200
     if(blog){
@@ -149,7 +123,6 @@ const getOne = async (ctx, next) => {
 }
 
 module.exports = {
-    get,
     create,
     list,
     getOne
