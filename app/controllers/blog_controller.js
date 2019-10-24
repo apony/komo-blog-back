@@ -41,10 +41,15 @@ const list = async (ctx, next) => {
 
     // 按条件搜索 比如标题 （好像find里只能在本集合中找对应字段，待小马哥研究）
     let searchObj = {}
-    let searchFiled = ['userId']
+    let searchFiled = ['userId','title']
     searchFiled.forEach(field => {
         if (!!req[field]) {
-            searchObj[field] = req[field]
+            if(field === 'title'){
+                let reg  = new RegExp(req[field], 'i');
+                searchObj[field] = {$regex:reg}
+            }else{
+                searchObj[field] = req[field]
+            }
         }
     })
 
