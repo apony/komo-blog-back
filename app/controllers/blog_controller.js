@@ -123,8 +123,34 @@ const list = async (ctx, next) => {
     }
 }
 
+// 获取单个blog
+const getOne = async (ctx, next) => {
+    const req = ctx.params
+
+    // 这里找不到就直接返回404了
+    const blog = await Blog_col.findOne({_id: req.id}).lean()
+
+    ctx.status = 200
+    if(blog){
+        blog.createTime = common.dateFormat(new Date(blog.createTime))
+        ctx.body = {
+            success: true,
+            msg: '成功',
+            data: {
+                item: blog
+            }
+        }
+    }else{
+        ctx.body = {
+            success: false,
+            msg: '没有查询到对应博客'
+        }
+    }
+}
+
 module.exports = {
     get,
     create,
-    list
+    list,
+    getOne
 }

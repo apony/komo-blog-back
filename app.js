@@ -39,7 +39,7 @@ app.use(
   koajwt({
     secret
   }).unless({
-    path: [/\/user\/login/, /\/user\/register/, /\/blog\/list/]
+    path: [/\/user\/login/, /\/user\/register/, /\/blog\/list/, /\/blog\/\d/]
   })
 )
 app.use(cors())
