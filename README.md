@@ -15,7 +15,7 @@ npm install
 ```
 
 ## 安装 nodemon
-
+### 作用：是可以检测代码变化
 ```shell
 npm i nodemon -g
 ```
@@ -26,9 +26,8 @@ npm i nodemon -g
 npm run server
 ```
 
-## tips
+## 注意
 
 - 运行端口：http://loaclhost:9000
-- 安装 mongodb，q 群有安装教程(723594858),mongoDB 可视化工具：Robo3T
-- nodemon 可以检测代码变化，重新运行 node app.js
-- 修改 mongodb 端口为 30000，默认为 27017（安装目录找到 mongod.cfg 修改 port 字段即可，然后重启 mongodb 服务）
+- 安装mongodb和可视化工具：Robo3T q群有安装教程(723594858)
+- 修改mongodb端口为30000，默认为27017（安装目录找到 mongod.cfg 修改 port 字段即可，然后打开控制面板-管理工具-服务找到mongodb 服务右键重启）
